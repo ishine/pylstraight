@@ -93,6 +93,18 @@ def test_very_long_frame_shift() -> None:
     assert len(f0) == 1
 
 
+def test_ac_induction_removal(sample_data: tuple[np.ndarray, int]) -> None:
+    """Test removal of AC induction."""
+    x, fs = sample_data
+    t = np.arange(len(x)) / fs
+    ac_frequency = 50
+    ac_amplitude = 1e-3
+    ac_noise = ac_amplitude * np.sin(2 * np.pi * ac_frequency * t)
+    f0 = pyls.extract_f0(x, fs)
+    f02 = pyls.extract_f0(x + ac_noise, fs)
+    assert len(f0[0 < f0]) == len(f02[0 < f02])
+
+
 def test_if_number_of_harmonic(sample_data: tuple[np.ndarray, int]) -> None:
     """Test if_number_of_harmonic parameter."""
     x, fs = sample_data
@@ -111,3 +123,38 @@ def test_if_number_of_harmonic(sample_data: tuple[np.ndarray, int]) -> None:
     assert abs(len(f01[0 < f01]) - len(f03[0 < f03])) <= 1
     assert np.max(np.abs(f01[voiced] - f02[voiced])) < 5
     assert np.max(np.abs(f01[voiced] - f03[voiced])) < 5
+
+
+def test_conversion() -> None:
+    """Test conversion between different f0 formats."""
+    fs = 8000
+
+    def check_reversibility(x: np.ndarray, in_format: str, out_format: str) -> bool:
+        """Check if the conversion is identity.
+
+        Parameters
+        ----------
+        x : np.ndarray
+            The input.
+
+        in_format : str
+            The input format.
+
+        out_format : str
+            The output format.
+
+        Returns
+        -------
+        out : bool
+            True if the conversion is identity.
+
+        """
+        y = pyls.f0_to_f0(x, in_format, out_format, fs)
+        z = pyls.f0_to_f0(y, out_format, in_format, fs)
+        return np.allclose(x, z)
+
+    f0 = np.array([100, 0, 200]).astype(np.float64)
+    assert check_reversibility(f0, "linear", "log")
+    assert check_reversibility(f0, "linear", "inverse")
+    log_f0 = pyls.f0_to_f0(f0, "linear", "log")
+    assert check_reversibility(log_f0, "log", "inverse")

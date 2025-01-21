@@ -487,7 +487,7 @@ def zwvlt2ifq(pm: np.ndarray, fs: float) -> np.ndarray:
     npm = pm / (np.abs(pm) + 1e-10)
     pif = np.abs(np.diff(npm, axis=0))
     pif = np.pad(pif, ((1, 0), (0, 0)), mode="edge")
-    return fs / np.pi * np.asin(pif / 2)
+    return fs / np.pi * np.arcsin(pif / 2)
 
 
 def zifq2gpm2(
@@ -798,6 +798,7 @@ def zremoveACinduction(
     h60 = np.sum(np.abs(f - 60) < 5) / np.sum(0 < f)
     if h50 < 0.2 and h60 < 0.2:
         return x, ind, 0
+    ind = 1
     fq = 50 if h60 < h50 else 60
     tx = (np.arange(len(x)) + 1) / fs
     fqv = mrange(-0.3, 0.025, 0.3) + fq

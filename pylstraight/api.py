@@ -43,10 +43,10 @@ def f0_to_f0(
     f0 : np.ndarray [shape=(nframe,)]
         The input F0.
 
-    in_format : ['pitch', 'f0', 'logf0']
+    in_format : ['inverse', 'linear', 'log']
         The format of the input F0.
 
-    out_format : ['pitch', 'f0', 'logf0']
+    out_format : ['inverse', 'linear', 'log']
         The format of the output F0.
 
     fs : int
@@ -63,9 +63,9 @@ def f0_to_f0(
     >>> import pylstraight as pyls
     >>> import numpy as np
     >>> f0 = np.array([100, 200, 0, 400], dtype=float)
-    >>> pyls.f0_to_f0(f0, "f0", "logf0")
+    >>> pyls.f0_to_f0(f0, "linear", "log")
     array([ 4.60517019e+00,  5.29831737e+00, -1.00000000e+10,  5.99146455e+00])
-    >>> pyls.f0_to_f0(f0, "f0", "pitch", fs=16000)
+    >>> pyls.f0_to_f0(f0, "linear", "inverse", fs=16000)
     array([160.,  80.,   0.,  40.])
 
     """
@@ -76,28 +76,28 @@ def f0_to_f0(
     if in_format == out_format:
         return f0
 
-    if (in_format == "pitch" or out_format == "pitch") and fs <= 0:
+    if (in_format == "inverse" or out_format == "inverse") and fs <= 0:
         msg = "Sampling frequency is required."
         raise ValueError(msg)
 
-    voiced = f0 != (-1e10 if in_format == "logf0" else 0)
+    voiced = f0 != (-1e10 if in_format == "log" else 0)
     voiced_func = {
-        "pitch": {
-            "f0": lambda x: fs / x,
-            "logf0": lambda x: np.log(fs / x),
+        "inverse": {
+            "linear": lambda x: fs / x,
+            "log": lambda x: np.log(fs / x),
         },
-        "f0": {
-            "pitch": lambda x: fs / x,
-            "logf0": np.log,
+        "linear": {
+            "inverse": lambda x: fs / x,
+            "log": np.log,
         },
-        "logf0": {
-            "pitch": lambda x: fs / np.exp(x),
-            "f0": np.exp,
+        "log": {
+            "inverse": lambda x: fs / np.exp(x),
+            "linear": np.exp,
         },
     }
 
     unvoiced = ~voiced
-    unvoiced_value = -1e10 if out_format == "logf0" else 0
+    unvoiced_value = -1e10 if out_format == "log" else 0
 
     new_f0 = np.empty_like(f0)
     try:
@@ -299,7 +299,7 @@ def extract_f0(
     *,
     frame_shift: float = 5.0,
     f0_range: tuple[float, float] = (40.0, 400.0),
-    f0_format: str = "f0",
+    f0_format: str = "linear",
     f0_param: F0Param | None = None,
     return_aux: bool = False,
 ) -> np.ndarray:
@@ -319,7 +319,7 @@ def extract_f0(
     f0_range : tuple[float, float]
         The lower and upper bounds of F0 search in Hz.
 
-    f0_format : ['pitch', 'f0', 'logf0']
+    f0_format : ['inverse', 'linear', 'log']
         The output format.
 
     f0_param : F0Param or None
@@ -382,7 +382,7 @@ def extract_f0(
     f0, vuv, auxouts = MulticueF0v14(x, fs, f0_param)
     f0 *= vuv
     f0[f0_ceil < f0] = f0_ceil
-    f0 = f0_to_f0(f0, "f0", f0_format, fs=fs)
+    f0 = f0_to_f0(f0, "linear", f0_format, fs=fs)
 
     if return_aux:
         return f0, auxouts
@@ -398,7 +398,7 @@ def extract_ap(
     *,
     frame_shift: float = 5.0,
     ap_floor: float = 0.001,
-    f0_format: str = "f0",
+    f0_format: str = "linear",
     ap_format: str = "a",
     ap_param: ApParam | None = None,
 ) -> np.ndarray:
@@ -424,7 +424,7 @@ def extract_ap(
     ap_floor : float
         The minimum value of aperiodicity.
 
-    f0_format : ['pitch', 'f0', 'logf0']
+    f0_format : ['inverse', 'linear', 'log']
         The input format of the F0.
 
     ap_format : ['a', 'p', 'a/p', 'p/a']
@@ -485,7 +485,7 @@ def extract_ap(
     ap = exstraightAPind(
         x,
         fs,
-        f0_to_f0(f0, f0_format, "f0", fs=fs),
+        f0_to_f0(f0, f0_format, "linear", fs=fs),
         None if aux is None else aux.refined_cn,
         ap_param,
     )
@@ -500,7 +500,7 @@ def extract_sp(
     f0: np.ndarray,
     *,
     frame_shift: float = 5.0,
-    f0_format: str = "f0",
+    f0_format: str = "linear",
     sp_format: str = "linear",
     sp_param: SpParam | None = None,
 ) -> np.ndarray:
@@ -520,7 +520,7 @@ def extract_sp(
     frame_shift : float
         The frame shift in msec.
 
-    f0_format : ['pitch', 'f0', 'logf0']
+    f0_format : ['inverse', 'linear', 'log']
         The input format of the F0.
 
     sp_format : ['db', 'log', 'linear', 'power']
@@ -577,7 +577,7 @@ def extract_sp(
         )
         raise ValueError(msg)
 
-    sp = exstraightspec(x, f0_to_f0(f0, f0_format, "f0", fs=fs), fs, sp_param)
+    sp = exstraightspec(x, f0_to_f0(f0, f0_format, "linear", fs=fs), fs, sp_param)
     if scaler != 1:
         sp *= scaler
     return sp_to_sp(sp, "linear", sp_format)
@@ -590,7 +590,7 @@ def synthesize(
     fs: int,
     *,
     frame_shift: float = 5.0,
-    f0_format: str = "f0",
+    f0_format: str = "linear",
     ap_format: str = "a",
     sp_format: str = "linear",
     syn_param: SynParam | None = None,
@@ -614,7 +614,7 @@ def synthesize(
     frame_shift : float
         The frame shift in msec.
 
-    f0_format : ['pitch', 'f0', 'logf0']
+    f0_format : ['inverse', 'linear', 'log']
         The format of F0.
 
     ap_format : ['a', 'p', 'a/p', 'p/a']
@@ -670,7 +670,7 @@ def synthesize(
         syn_param.spectral_update_interval = frame_shift
 
     return exstraightsynth(
-        f0_to_f0(f0, f0_format, "f0", fs=fs),
+        f0_to_f0(f0, f0_format, "linear", fs=fs),
         sp_to_sp(sp, sp_format, "linear"),
         sp_to_sp(ap_to_ap(ap, ap_format, "a"), "linear", "db"),
         fs,

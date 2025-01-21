@@ -195,14 +195,13 @@ def straightSynthTB07ca(
         inx = np.arange(nii)
         inxq = np.arange(niiNew) * ((nii - 1) / (niiNew - 1))
         n2sgram = interp1(inx, n2sgram, inxq)
-        ap = interp1(inx, ap, inxq)
         fftl = fftLengthForLowestF0
         nii = niiNew
 
     if ap.shape[1] != nii:
         inx = np.arange(ap.shape[1])
         inxq = np.arange(nii) * ((ap.shape[1] - 1) / (nii - 1))
-        ap = interp1(inx, ap, inxq, method="*linear")
+        ap = interp1(inx, ap, inxq)
 
     aprms = 10 ** (ap / 20)
     aprm = np.clip(aprms * 1.6 - 0.015, 0.001, 1)
