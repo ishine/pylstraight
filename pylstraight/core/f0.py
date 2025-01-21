@@ -487,7 +487,7 @@ def zwvlt2ifq(pm: np.ndarray, fs: float) -> np.ndarray:
     npm = pm / (np.abs(pm) + 1e-10)
     pif = np.abs(np.diff(npm, axis=0))
     pif = np.pad(pif, ((1, 0), (0, 0)), mode="edge")
-    return fs / np.pi * np.asin(pif / 2)
+    return fs / np.pi * np.arcsin(pif / 2)
 
 
 def zifq2gpm2(
