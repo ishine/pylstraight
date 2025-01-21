@@ -28,7 +28,7 @@ def test_synthesis() -> None:
     ap = pyls.fromfile("tests/reference/data.ap", fs)
     ap = pyls.sp_to_sp(ap, "db", "linear")
     sp = pyls.fromfile("tests/reference/data.sp", fs)
-    hyp_syn = pyls.synthesize(f0, ap, sp, fs)[:len(ref_syn)]
+    hyp_syn = pyls.synthesize(f0, ap, sp, fs)[: len(ref_syn)]
     assert 0.95 < np.corrcoef(ref_syn, hyp_syn)[0, 1]
     pyls.write("tests/output/data.syn.wav", hyp_syn, fs)
 
@@ -40,7 +40,7 @@ def test_sample(sample_data: tuple[np.ndarray, int]) -> None:
     f0 = pyls.extract_f0(x, fs)
     ap = pyls.extract_ap(x, fs, f0)
     sp = pyls.extract_sp(x, fs, f0)
-    hyp_syn = pyls.synthesize(f0, ap, sp, fs)[:len(ref_syn)]
+    hyp_syn = pyls.synthesize(f0, ap, sp, fs)[: len(ref_syn)]
     assert 0.95 < np.corrcoef(ref_syn, hyp_syn)[0, 1]
     pyls.write("tests/output/data.pyls.wav", hyp_syn, fs)
 

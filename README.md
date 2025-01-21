@@ -2,10 +2,10 @@
 
 This is an unofficial Python reimplemantation of the [legacy-STRAIGHT](https://github.com/HidekiKawahara/legacy_STRAIGHT), which was originally written in MATLAB.
 
-[![Stable Manual](https://img.shields.io/badge/docs-latest-blue.svg)](https://takenori-y.github.io/pylstraight/0.1.0/)
+[![Stable Manual](https://img.shields.io/badge/docs-stable-blue.svg)](https://takenori-y.github.io/pylstraight/0.1.0/)
 [![Downloads](https://static.pepy.tech/badge/pylstriaght)](https://pepy.tech/project/pylstriaght)
 [![Python Version](https://img.shields.io/pypi/pyversions/pylstraight.svg)](https://pypi.python.org/pypi/pylstraight)
-[![PyPI Version](https://img.shields.io/pypi/v/diffsptk.svg)](https://pypi.python.org/pypi/diffsptk)
+[![PyPI Version](https://img.shields.io/pypi/v/pylstraight.svg)](https://pypi.python.org/pypi/pylstraight)
 [![Codecov](https://codecov.io/gh/takenori-y/pylstraight/branch/master/graph/badge.svg)](https://app.codecov.io/gh/takenori-y/pylstraight)
 [![License](https://img.shields.io/github/license/takenori-y/pylstraight.svg)](https://github.com/takenori-y/pylstraight/blob/master/LICENSE)
 [![GitHub Actions](https://github.com/takenori-y/pylstraight/workflows/package/badge.svg)](https://github.com/takenori-y/pylstraight/actions)
