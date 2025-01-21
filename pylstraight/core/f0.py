@@ -798,6 +798,7 @@ def zremoveACinduction(
     h60 = np.sum(np.abs(f - 60) < 5) / np.sum(0 < f)
     if h50 < 0.2 and h60 < 0.2:
         return x, ind, 0
+    ind = 1
     fq = 50 if h60 < h50 else 60
     tx = (np.arange(len(x)) + 1) / fs
     fqv = mrange(-0.3, 0.025, 0.3) + fq

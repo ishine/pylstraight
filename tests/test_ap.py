@@ -78,3 +78,41 @@ def test_long_f0_input() -> None:
     f0 = np.zeros(201)
     ap = pyls.extract_ap(x, fs, f0)
     assert len(ap) == 201
+
+
+def test_conversion() -> None:
+    """Test conversion between different aperiodicity formats."""
+
+    def check_reversibility(x: np.ndarray, in_format: str, out_format: str) -> bool:
+        """Check if the conversion is identity.
+
+        Parameters
+        ----------
+        x : np.ndarray
+            The input.
+
+        in_format : str
+            The input format.
+
+        out_format : str
+            The output format.
+
+        Returns
+        -------
+        out : bool
+            True if the conversion is identity.
+
+        """
+        y = pyls.ap_to_ap(x, in_format, out_format)
+        z = pyls.ap_to_ap(y, out_format, in_format)
+        return np.allclose(x, z)
+
+    a = np.array([0.001, 0.5, 0.999])
+    assert check_reversibility(a, "a", "p")
+    assert check_reversibility(a, "a", "a/p")
+    assert check_reversibility(a, "a", "p/a")
+    p = pyls.ap_to_ap(a, "a", "p")
+    assert check_reversibility(p, "p", "a/p")
+    assert check_reversibility(p, "p", "p/a")
+    a_p = pyls.ap_to_ap(p, "p", "a/p")
+    assert check_reversibility(a_p, "a/p", "p/a")
