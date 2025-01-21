@@ -2,7 +2,7 @@ pylstraight documentation
 =========================
 
 `pylstraight <https://github.com/takenori-y/pylstraight>`_ is an unofficial Python
-reimplemantation of the legacy-STRAIGHT, which was originally written in MATLAB.
+reimplementation of the legacy-STRAIGHT, which was originally written in MATLAB.
 
 .. toctree::
 

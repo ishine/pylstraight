@@ -11,7 +11,7 @@ maintainers = [
 description = "A Python wrapper for legacy STARIGHT"
 readme = "README.md"
 requires-python = ">=3.8"
-keywords = ["speech analysis", "signal processing", "straight"]
+keywords = ["speech analysis", "signal processing", "vocoder", "straight"]
 license = { text = "Apache 2.0" }
 classifiers = [
   "License :: OSI Approved :: Apache Software License",
