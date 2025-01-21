@@ -1,0 +1,17 @@
+# project
+.venv/
+build/
+dist/
+
+# codecov
+.coverage
+coverage.xml
+
+# tests
+tests/output
+
+# tools
+tools/**/
+
+# misc
+__pycache__/

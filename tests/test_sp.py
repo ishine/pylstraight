@@ -1,0 +1,77 @@
+# ------------------------------------------------------------------------ #
+# Copyright 2025 Takenori Yoshimura                                        #
+#                                                                          #
+# Licensed under the Apache License, Version 2.0 (the "License");          #
+# you may not use this file except in compliance with the License.         #
+# You may obtain a copy of the License at                                  #
+#                                                                          #
+#     http://www.apache.org/licenses/LICENSE-2.0                           #
+#                                                                          #
+# Unless required by applicable law or agreed to in writing, software      #
+# distributed under the License is distributed on an "AS IS" BASIS,        #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+# See the License for the specific language governing permissions and      #
+# limitations under the License.                                           #
+# ------------------------------------------------------------------------ #
+
+from __future__ import annotations
+
+import os
+
+import numpy as np
+
+import pylstraight as pyls
+
+
+def test_sample_with_debug_mode(sample_data: tuple[np.ndarray, int]) -> None:
+    """Test sample data."""
+    x, fs = sample_data
+    os.environ["PYLSTRAIGHT_DEBUG"] = "1"
+    f0 = pyls.fromfile("tests/reference/data.f0")
+    ref_sp = pyls.fromfile("tests/reference/data.sp", fs)
+    hyp_sp = pyls.extract_sp(x, fs, f0)
+    assert np.allclose(ref_sp, hyp_sp, rtol=1e-4)
+
+
+def test_sample_without_debug_mode(sample_data: tuple[np.ndarray, int]) -> None:
+    """Test sample data."""
+    x, fs = sample_data
+    os.environ["PYLSTRAIGHT_DEBUG"] = "0"
+    f0 = pyls.fromfile("tests/reference/data.f0")
+    ref_sp = pyls.fromfile("tests/reference/data.sp", fs)
+    hyp_sp = pyls.extract_sp(x, fs, f0)
+    assert np.allclose(ref_sp[3:-3], hyp_sp[3:-3], rtol=1e-4)
+
+
+def test_short_type_input(sample_data: tuple[np.ndarray, int]) -> None:
+    """Test sample data."""
+    x, fs = sample_data
+    x2 = (x * 32768).astype(np.int16)
+    f0 = pyls.fromfile("tests/reference/data.f0")
+    sp = pyls.extract_sp(x, fs, f0)
+    sp2 = pyls.extract_sp(x2, fs, f0) / 32768
+    assert np.allclose(sp[3:-3], sp2[3:-3], rtol=1e-4)
+
+
+def test_all_zero_input() -> None:
+    """Test all zero input."""
+    x, fs = np.zeros(8000), 8000
+    f0 = np.zeros(200)
+    sp = pyls.extract_sp(x, fs, f0)
+    assert np.all(sp == sp[0, 0])
+
+
+def test_short_f0_input() -> None:
+    """Test short f0 input."""
+    x, fs = np.zeros(8000), 8000
+    f0 = np.zeros(199)
+    sp = pyls.extract_sp(x, fs, f0)
+    assert len(sp) == 199
+
+
+def test_long_f0_input() -> None:
+    """Test long f0 input."""
+    x, fs = np.zeros(8000), 8000
+    f0 = np.zeros(201)
+    sp = pyls.extract_sp(x, fs, f0)
+    assert len(sp) == 200

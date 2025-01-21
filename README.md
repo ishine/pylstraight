@@ -1,0 +1,68 @@
+# pylstraight
+
+This is an unofficial Python reimplemantation of the [legacy-STRAIGHT](https://github.com/HidekiKawahara/legacy_STRAIGHT), which was originally written in MATLAB.
+
+[![Stable Manual](https://img.shields.io/badge/docs-latest-blue.svg)](https://takenori-y.github.io/pylstraight/0.1.0/)
+[![Downloads](https://static.pepy.tech/badge/pylstriaght)](https://pepy.tech/project/pylstriaght)
+[![Python Version](https://img.shields.io/pypi/pyversions/pylstraight.svg)](https://pypi.python.org/pypi/pylstraight)
+[![PyPI Version](https://img.shields.io/pypi/v/diffsptk.svg)](https://pypi.python.org/pypi/diffsptk)
+[![Codecov](https://codecov.io/gh/takenori-y/pylstraight/branch/master/graph/badge.svg)](https://app.codecov.io/gh/takenori-y/pylstraight)
+[![License](https://img.shields.io/github/license/takenori-y/pylstraight.svg)](https://github.com/takenori-y/pylstraight/blob/master/LICENSE)
+[![GitHub Actions](https://github.com/takenori-y/pylstraight/workflows/package/badge.svg)](https://github.com/takenori-y/pylstraight/actions)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+
+## Requirements
+
+- Python 3.8+
+
+## Documentation
+
+- See [this page](https://takenori-y.github.io/pylstraight/latest/) for the reference manual.
+
+## Installation
+
+The latest stable release can be installed from PyPI by running the command below.
+
+```sh
+pip install pylstraight
+```
+
+The development release can be installed from the master branch using the following command:
+
+```sh
+pip install git+https://github.com/takenori-y/pylstraight.git@master
+```
+
+## Unsupported Features
+
+- Batch processing
+- GPU acceleration
+- JIT compilation
+
+## Example
+
+```py
+import pylstraight as pyls
+
+# Read an example waveform.
+x, fs = pyls.read("assets/data.wav")
+
+# Set control parameters.
+fp = 5                # Frame shift in msec
+f0_range = (60, 240)  # F0 search range in Hz
+
+# Extract the STRAIGHT parameters.
+f0 = pyls.extract_f0(x, fs, f0_range=f0_range, frame_shift=fp)
+ap = pyls.extract_ap(x, fs, f0, frame_shift=fp)
+sp = pyls.extract_sp(x, fs, f0, frame_shift=fp)
+
+# Synthesize a waveform using the parameters.
+sy = pyls.synthesize(f0, ap, sp, fs, frame_shift=fp)
+
+# Write the synthesized waveform.
+pyls.write("data.syn.wav", sy, fs)
+```
+
+## License
+
+The original code is licensed under the Apache License 2.0.
