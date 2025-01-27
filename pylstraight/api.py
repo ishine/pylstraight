@@ -51,7 +51,7 @@ def f0_to_f0(
 
     fs : int
         The sampling frequency in Hz. This is required when the input or output format
-        is 'pitch'.
+        is *inverse*.
 
     Returns
     -------
