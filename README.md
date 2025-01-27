@@ -33,6 +33,13 @@ The development release can be installed from the master branch using the follow
 pip install git+https://github.com/takenori-y/pylstraight.git@master
 ```
 
+## Supported Features
+
+- Fundamental frequency extraction
+- Aperiodicity measure extraction
+- Spectral envelope extraction
+- Synthesis using the extracted parameters
+
 ## Unsupported Features
 
 - Batch processing
