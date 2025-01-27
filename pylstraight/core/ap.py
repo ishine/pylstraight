@@ -83,7 +83,7 @@ def exstraightAPind(
 
     """
     if prm is None:
-        prm = ApParam()
+        prm = ApParam()  # pragma: no cover
 
     # Set parameters.
     framem = prm.default_window_length

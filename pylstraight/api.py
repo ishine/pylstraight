@@ -727,29 +727,6 @@ def fromfile(
     return data
 
 
-def tofile(filename: str, data: np.ndarray) -> None:
-    """Write a STRAIGHT parameter to a file in binary format.
-
-    Parameters
-    ----------
-    filename : str
-        The file to write.
-
-    data : np.ndarray [shape=(nframe,)] or [shape=(nframe, nfreq)]
-        The STRAIGHT parameter to write.
-
-    Examples
-    --------
-    >>> import pylstraight as pyls
-    >>> import numpy as np
-    >>> x, fs = np.random.randn(8000), 8000
-    >>> f0 = pyls.extract_f0(x, fs)
-    >>> pyls.tofile("data.f0", f0)
-
-    """
-    data.tofile(filename)
-
-
 def read(filename: str, **kwargs: Any) -> tuple[np.ndarray, int]:
     """Read audio file. This is the simple wrapper of `soundfile.read`.
 

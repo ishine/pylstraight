@@ -75,7 +75,9 @@ def exstraightsynth(
 
     """
     if prm is None:
-        prm = SynParam()
+        prm = SynParam()  # pragma: no cover
+
+    # Set parameters.
     shiftm = prm.spectral_update_interval
     pconv = prm.pitch_stretching_factor
     fconv = prm.frequency_axis_stretching_factor
@@ -88,6 +90,7 @@ def exstraightsynth(
     idcv = prm.frequency_axis_mapping_table
     imap = prm.time_axis_mapping_table
     lowestF0 = prm.lowest_f0
+
     return straightSynthTB07ca(
         n3sgram,
         f0raw,

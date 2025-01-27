@@ -79,6 +79,9 @@ def exstraightspec(
         Spectrogram.
 
     """
+    if prm is None:
+        prm = SpParam()  # pragma: no cover
+
     # Set parameters.
     framem = prm.default_frame_length
     shiftm = prm.spectral_update_interval

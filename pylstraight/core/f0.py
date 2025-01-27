@@ -122,14 +122,15 @@ def SourceInfobyMultiCues050111(
         Auxiliary outputs.
 
     """
+    if prm is None:
+        prm = F0Param()  # pragma: no cover
+
     # Check the length of the input signal.
     minlen = 30
     if len(x) < minlen:
         x = np.pad(x, (0, minlen - len(x)))
 
     # Set parameters.
-    if prm is None:
-        prm = F0Param()
     f0floor = prm.f0_search_lower_bound
     f0ceil = prm.f0_search_upper_bound
     shiftm = prm.f0_frame_update_interval

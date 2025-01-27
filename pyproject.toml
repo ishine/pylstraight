@@ -8,7 +8,7 @@ authors = [{ name = "Takenori Yoshimura" }]
 maintainers = [
   { name = "Takenori Yoshimura", email = "takenori@sp.nitech.ac.jp" },
 ]
-description = "A Python wrapper for legacy STARIGHT"
+description = "A Python reimplementation of the legacy STARIGHT"
 readme = "README.md"
 requires-python = ">=3.8"
 keywords = ["speech analysis", "signal processing", "vocoder", "straight"]
