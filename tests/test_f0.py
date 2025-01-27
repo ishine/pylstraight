@@ -153,7 +153,7 @@ def test_conversion() -> None:
         z = pyls.f0_to_f0(y, out_format, in_format, fs)
         return np.allclose(x, z)
 
-    f0 = np.array([100, 0, 200]).astype(np.float64)
+    f0 = np.array([100, 0, 200])
     assert check_reversibility(f0, "linear", "log")
     assert check_reversibility(f0, "linear", "inverse")
     log_f0 = pyls.f0_to_f0(f0, "linear", "log")

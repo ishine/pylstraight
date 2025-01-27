@@ -62,7 +62,7 @@ def f0_to_f0(
     --------
     >>> import pylstraight as pyls
     >>> import numpy as np
-    >>> f0 = np.array([100, 200, 0, 400], dtype=float)
+    >>> f0 = np.array([100, 200, 0, 400])
     >>> pyls.f0_to_f0(f0, "linear", "log")
     array([ 4.60517019e+00,  5.29831737e+00, -1.00000000e+10,  5.99146455e+00])
     >>> pyls.f0_to_f0(f0, "linear", "inverse", fs=16000)
@@ -73,6 +73,7 @@ def f0_to_f0(
         msg = "F0 must be an instance of numpy.ndarray."
         raise TypeError(msg)
 
+    f0 = f0.astype(np.float64)
     if in_format == out_format:
         return f0
 
@@ -143,6 +144,7 @@ def ap_to_ap(ap: np.ndarray, in_format: str, out_format: str) -> np.ndarray:
         msg = "Aperiodicity must be an instance of numpy.ndarray."
         raise TypeError(msg)
 
+    ap = ap.astype(np.float64)
     if in_format == out_format:
         return ap
 
@@ -200,7 +202,7 @@ def sp_to_sp(sp: np.ndarray, in_format: str, out_format: str) -> np.ndarray:
     --------
     >>> import pylstraight as pyls
     >>> import numpy as np
-    >>> sp = np.array([[-10, 60, 0]], dtype=float)
+    >>> sp = np.array([[-10, 60, 0]])
     >>> pyls.sp_to_sp(sp, "db", "linear")
     array([[3.16227766e-01, 1.00000000e+03, 1.00000000e+00]])
     >>> pyls.sp_to_sp(sp, "db", "log")
@@ -211,6 +213,7 @@ def sp_to_sp(sp: np.ndarray, in_format: str, out_format: str) -> np.ndarray:
         msg = "Spectrum must be an instance of numpy.ndarray."
         raise TypeError(msg)
 
+    sp = sp.astype(np.float64)
     if in_format == out_format:
         return sp
 

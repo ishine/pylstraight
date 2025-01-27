@@ -104,7 +104,7 @@ def test_conversion() -> None:
         z = pyls.sp_to_sp(y, out_format, in_format)
         return np.allclose(x, z)
 
-    sp = np.array([-60, 0, 60]).astype(np.float64)
+    sp = np.array([-60, 0, 60])
     assert check_reversibility(sp, "db", "log")
     assert check_reversibility(sp, "db", "linear")
     assert check_reversibility(sp, "db", "power")
