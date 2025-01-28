@@ -96,6 +96,7 @@ exclude = ["__init__.py"]
 
 [tool.codespell]
 skip = "./docs/build,./tools"
+ignore-multiline-regex = "codespell:ignore-begin.*codespell:ignore-end"
 
 [tool.coverage.report]
 exclude_lines = [

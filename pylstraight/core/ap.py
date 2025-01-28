@@ -357,9 +357,11 @@ def correctdpv(
     mask = f0 == 0
     f0[mask] = 40
 
-    iif_ = np.minimum(nf0 - 1, mround(np.arange(mm) * shiftap / shiftm))
-    f0i = f0[iif_][:, None]
-    ecri = 1 / ecrt[iif_][:, None]
+    # codespell:ignore-begin
+    iif = np.minimum(nf0 - 1, mround(np.arange(mm) * shiftap / shiftm))
+    f0i = f0[iif][:, None]
+    ecri = 1 / ecrt[iif][:, None]
+    # codespell:ignore-end
 
     bdr = sigmoid((fx - 2.5 * f0i) / f0i * 4)
     bdr = (bdr + ecri) / (1 + ecri)
