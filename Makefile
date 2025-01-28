@@ -41,6 +41,7 @@ check: tool
 	. ./.venv/bin/activate && python -m ruff check $(PROJECT) tests
 	. ./.venv/bin/activate && python -m ruff format --check $(PROJECT) tests docs/source
 	. ./.venv/bin/activate && python -m mdformat --check *.md
+	./.venv/bin/codespell
 	./tools/taplo/taplo fmt --check *.toml
 	./tools/yamlfmt/yamlfmt --lint *.yml .github/workflows/*.yml
 

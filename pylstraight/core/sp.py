@@ -91,7 +91,7 @@ def exstraightspec(
 
     fftl = get_fft_length(fs, framem, "full")
 
-    # Peform spectral estimation.
+    # Perform spectral estimation.
     xamp = mstd(x)
     scaleconst = 2200
     xold = x if xamp == 0 else x / xamp * scaleconst

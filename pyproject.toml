@@ -36,6 +36,7 @@ dynamic = ["version"]
 [project.optional-dependencies]
 dev = [
   "build",
+  "codespell",
   "mdformat",
   "numpydoc",
   "pkginfo",
@@ -92,6 +93,9 @@ ignore = [
 ]
 preview = true
 exclude = ["__init__.py"]
+
+[tool.codespell]
+skip = "./docs/build,./tools"
 
 [tool.coverage.report]
 exclude_lines = [

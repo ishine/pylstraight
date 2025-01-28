@@ -1975,7 +1975,7 @@ def zvuvdecision4(
         Fundamental frequency.
 
     rel : np.ndarray [shape=(nn,)]
-        Reliablity values.
+        Reliability values.
 
     pwsdb : np.ndarray [shape=(nn,)]
         Power in dB.

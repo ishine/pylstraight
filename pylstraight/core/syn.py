@@ -173,10 +173,10 @@ def straightSynthTB07ca(
         Aperiodicity measure.
 
     idcv : np.ndarray [shape=(nfreq,)] or None
-        Arbirtary mapping of frequency axis.
+        Arbitrary mapping of frequency axis.
 
     imap : np.ndarray or None
-        Arbirtary mapping from new time (sample) to old time (frame).
+        Arbitrary mapping from new time (sample) to old time (frame).
 
     lowestF0 : float
         Lower limit of the resynthesized fundamental frequency in Hz.
