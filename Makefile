@@ -16,7 +16,7 @@
 
 PROJECT := pylstraight
 
-PYTHON_VERSION := 3.9
+PYTHON_VERSION := 3.10
 
 venv:
 	test -d .venv || python$(PYTHON_VERSION) -m venv .venv
