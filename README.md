@@ -5,6 +5,7 @@ This is an unofficial Python reimplementation of the [legacy-STRAIGHT](https://g
 [![Latest Manual](https://img.shields.io/badge/docs-latest-blue.svg)](https://takenori-y.github.io/pylstraight/latest/)
 [![Stable Manual](https://img.shields.io/badge/docs-stable-blue.svg)](https://takenori-y.github.io/pylstraight/0.1.1/)
 [![Downloads](https://static.pepy.tech/badge/pylstraight)](https://pepy.tech/project/pylstraight)
+[![ClickPy](https://img.shields.io/badge/downloads-clickpy-yellow.svg)](https://clickpy.clickhouse.com/dashboard/pylstraight)
 [![Python Version](https://img.shields.io/pypi/pyversions/pylstraight.svg)](https://pypi.python.org/pypi/pylstraight)
 [![PyPI](https://img.shields.io/pypi/v/pylstraight.svg)](https://pypi.python.org/pypi/pylstraight)
 [![Anaconda](https://anaconda.org/conda-forge/pylstraight/badges/version.svg)](https://anaconda.org/conda-forge/pylstraight)
