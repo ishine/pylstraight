@@ -34,7 +34,7 @@ html_theme_options = {
     },
     "switcher": {
         "json_url": f"https://takenori-y.github.io/{project}/switcher.json",
-        "version_match": release,
+        "version_match": "latest" if "dev" in release else release,
     },
     "icon_links": [
         {
