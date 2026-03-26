@@ -53,7 +53,7 @@ format: tool
 	./tools/yamlfmt/yamlfmt *.yml .github/workflows/*.yml
 
 test:
-	. ./.venv/bin/activate && python -m pytest
+	. ./.venv/bin/activate && python -m pytest tests
 
 test-doc:
 	. ./.venv/bin/activate && python -m pytest --doctest-modules --no-cov $(PROJECT)/api.py
